@@ -18,7 +18,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_name = 'Product'
+        db_table = 'Product'
 
     def __str__(self):
         return self.title

@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
                             default=ROLES.ADMIN, max_length=10)
 
     class Meta:
-        db_name = 'User'
+        db_table = 'User'
 
     def __str__(self):
         return self.username

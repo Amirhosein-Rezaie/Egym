@@ -8,7 +8,7 @@ class Blog(models.Model):
     uploaded_at = models.DateField(auto_now_add=True, blank=False, null=False)
 
     class Meta:
-        db_name = 'blog'
+        db_table = 'blog'
 
     def __str__(self):
         return self.title
