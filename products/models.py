@@ -6,13 +6,14 @@ from django.core.validators import (
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=255, db_index=True)
+    name = models.CharField(
+        max_length=255, db_index=True, blank=False, null=False)
 
     price = models.IntegerField(validators=[
         MinValueValidator(0)
     ])
 
-    description = models.TextField()
+    description = models.TextField(blank=False, null=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
