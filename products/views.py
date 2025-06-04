@@ -5,10 +5,12 @@ from . import models
 from . import serializers
 
 
+# the set settings of paginations of all products
 class ProductPagination(PageNumberPagination):
     page_size = 2
 
 
+# the viewset of all products
 class ProductAll(viewsets.ModelViewSet):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductSerializer

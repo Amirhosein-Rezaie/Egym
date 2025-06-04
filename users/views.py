@@ -7,8 +7,15 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiExample
+from rest_framework.pagination import PageNumberPagination
 
 
+# set settings for paginations of users
+class UserPaginations(PageNumberPagination):
+    page_size = 2
+
+
+# the func for register a user and set documentation
 @extend_schema(
     request=serializers.RegisterUserSerializer,
     examples=[
@@ -41,6 +48,7 @@ def RegisterUser(request: Request):
         }, status=status.HTTP_201_CREATED)
 
 
+# the function base view of all users and set documentation
 @extend_schema(
     description='get all of the users',
     responses={200: serializers.UserSerializer}
@@ -50,3 +58,10 @@ def AllUsers(request):
     users = models.CustomUser.objects.all()
     serializer = serializers.UserSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# viewset of all the users
+class User_GET_All(viewsets.ModelViewSet):
+    serializer_class = serializers.UserSerializer
+    pagination_class = UserPaginations
+    queryset = models.CustomUser.objects.all()

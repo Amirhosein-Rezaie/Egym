@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# the serializer of the register new user
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
