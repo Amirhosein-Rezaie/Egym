@@ -6,4 +6,4 @@ class IsAdminOrReadOnly(BasePermission):
     def has_permission(self, request: Request, view):
         if request.method in SAFE_METHODS:
             return True
-        return getattr(request.user, 'role', None) == 'admin'
+        return getattr(request.user, 'role', None) == 'ADMIN'
