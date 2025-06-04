@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
         USER = 'USER'
 
     role = models.CharField(choices=ROLES.choices,
-                            default=ROLES.ADMIN, max_length=10)
+                            default=ROLES.USER, max_length=10)
 
     class Meta:
         db_table = 'User'
