@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiExample
 from rest_framework.pagination import PageNumberPagination
+from rest_framework import permissions
+from .permissions import IsAdmin, IsAnonymous, user_required, anonymous_required
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 # set settings for paginations of users
@@ -33,6 +36,7 @@ class UserPaginations(PageNumberPagination):
     description="Register or add a new user."
 )
 @api_view(['POST'])
+@anonymous_required
 def RegisterUser(request: Request):
     user = request.data
     serializer = serializers.RegisterUserSerializer(data=user)
@@ -65,3 +69,11 @@ class User_GET_All(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     pagination_class = UserPaginations
     queryset = models.CustomUser.objects.all()
+    permission_classes = [
+        IsAdmin
+    ]
+
+
+# custom login view
+class CustomLoginView(TokenObtainPairView):
+    permission_classes = [IsAnonymous]
