@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'products',
     'blogs',
     'drf_spectacular',
+    'home',
 ]
 
 MIDDLEWARE = [
