@@ -21,4 +21,4 @@ class Product(models.Model):
         db_table = 'Product'
 
     def __str__(self):
-        return self.title
+        return self.name
