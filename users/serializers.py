@@ -14,4 +14,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return models.CustomUser.objects.create(**validated_data)
+        password = validated_data.pop('password')
+        user = models.CustomUser(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
