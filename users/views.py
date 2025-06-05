@@ -28,13 +28,14 @@ class UserPaginations(PageNumberPagination):
             value={
                 "username": "testuser",
                 "password": "StrongPassword123",
-                "role": "USER|ADMIN"
+                "role": "USER|ADMIN",
+                "phone": "string-11"
             },
             request_only=True
         )
     ],
     responses={201: serializers.RegisterUserSerializer},
-    description="Register or add a new user."
+    description="Register or add a new user. phone with 11 characters"
 )
 @api_view(['POST'])
 @anonymous_required

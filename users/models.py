@@ -10,6 +10,8 @@ class CustomUser(AbstractUser):
     role = models.CharField(choices=ROLES.choices,
                             default=ROLES.USER, max_length=10)
 
+    phone = models.CharField(max_length=11,unique=True,blank=True,null=True)
+
     class Meta:
         db_table = 'User'
 
