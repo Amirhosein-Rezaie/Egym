@@ -11,6 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions
 from .permissions import IsAdmin, IsAnonymous, user_required, anonymous_required
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.shortcuts import get_object_or_404
 
 
 # set settings for paginations of users
@@ -77,3 +78,11 @@ class User_GET_All(viewsets.ModelViewSet):
 # custom login view
 class CustomLoginView(TokenObtainPairView):
     permission_classes = [IsAnonymous]
+
+
+# get one user
+@api_view(['GET'])
+def GetUser(request: Request, user_id: int):
+    user = get_object_or_404(models.CustomUser, id=user_id)
+    serializer = serializers.UserSerializer(user)
+    return Response(data=serializer.data, status=status.HTTP_200_OK)

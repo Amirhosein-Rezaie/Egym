@@ -15,6 +15,7 @@ urlpatterns = [
     path('blogs/', include('blogs.urls')),
     path('login/', views.CustomLoginView.as_view()),
     path('register/', views.RegisterUser),
+    path('user/<int:user_id>', views.GetUser),
     # swagger and documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(), name='swagger_ui')
