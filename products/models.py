@@ -22,3 +22,15 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Image(models.Model):
+    file = models.ImageField(upload_to='images/')
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images_product')
+
+    class Meta:
+        db_table = 'images'
+
+    def __str__(self):
+        return f"{self.file} -> {self.product}"
