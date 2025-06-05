@@ -17,6 +17,10 @@ class Product(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    stock = models.IntegerField(null=True, blank=False, validators=[
+        MinValueValidator(0),
+    ])
+
     class Meta:
         db_table = 'Product'
 
