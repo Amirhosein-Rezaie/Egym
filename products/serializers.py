@@ -9,7 +9,7 @@ class ImageSerilizer(ModelSerializer):
 
 
 class ProductSerializer(ModelSerializer):
-    images_product = ImageSerilizer(many=True, read_only=True)
+    images_product = ImageSerilizer(many=True,read_only=True)
 
     class Meta:
         model = models.Product
