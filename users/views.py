@@ -6,9 +6,10 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
-from drf_spectacular.utils import extend_schema, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiParameter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions
+from rest_framework.decorators import permission_classes
 from .permissions import IsAdmin, IsAnonymous, user_required, anonymous_required
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.shortcuts import get_object_or_404
@@ -82,8 +83,13 @@ class CustomLoginView(TokenObtainPairView):
 
 
 # get one user
+@extend_schema(
+    description="This view is allowed only for admins.",
+    responses={302: serializers.UserSerializer}
+)
 @api_view(['GET'])
+@permission_classes([IsAdmin])
 def GetUser(request: Request, user_id: int):
     user = get_object_or_404(models.CustomUser, id=user_id)
     serializer = serializers.UserSerializer(user)
-    return Response(data=serializer.data, status=status.HTTP_200_OK)
+    return Response(data=serializer.data, status=status.HTTP_302_FOUND)
