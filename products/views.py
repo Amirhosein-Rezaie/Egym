@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from drf_spectacular.utils import extend_schema
 
 
 # the set settings of paginations of all products
@@ -28,6 +29,9 @@ class ProductAll(viewsets.ModelViewSet):
 
 
 # search in products
+@extend_schema(
+    responses={200: serializers.ProductSerializer}
+)
 @api_view(['GET'])
 def search_products(request: Request, search: str):
     products_found = models.Product.objects.filter(name__icontains=search)
