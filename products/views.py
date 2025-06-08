@@ -30,7 +30,7 @@ class ProductAll(viewsets.ModelViewSet):
 # search in products
 @api_view(['GET'])
 def search_products(request: Request, search: str):
-    products_found = models.Product.objects.filter(name__istartswith=search)
+    products_found = models.Product.objects.filter(name__icontains=search)
 
     paginator = PageNumberPagination()
     paginator.page_size = 2
