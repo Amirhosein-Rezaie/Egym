@@ -12,10 +12,6 @@ from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 
 
-# paginations for funstion base views
-paginator = PageNumberPagination()
-
-
 # the set settings of paginations of all products
 class ProductPagination(PageNumberPagination):
     page_size = 2
@@ -33,21 +29,14 @@ class ProductAll(viewsets.ModelViewSet):
 
 # search in products
 @api_view(['GET'])
-def serach_products(request: Request, search: str):
-    products_found = models.Product.objects.filter(name=search)
+def search_products(request: Request, search: str):
+    products_found = models.Product.objects.filter(name__istartswith=search)
 
-    # pagination datas
+    paginator = PageNumberPagination()
     paginator.page_size = 2
-    paginated_products = paginator.paginate_queryset(products_found)
+    paginated_products = paginator.paginate_queryset(products_found, request)
 
-    # serialize the datas
     serialized_products = serializers.ProductSerializer(
-        data=paginated_products, many=True)
+        paginated_products, many=True)
 
-    if (serialized_products.is_valid()):
-        return Response(data=serialized_products.data, status=status.HTTP_302_FOUND)
-
-    return Response(data={
-        'success': False,
-        'error': serialized_products.errors
-    }, status=status.HTTP_404_NOT_FOUND)
+    return paginator.get_paginated_response(data=serialized_products.data)
