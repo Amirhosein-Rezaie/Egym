@@ -10,7 +10,7 @@ from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiParamete
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions
 from rest_framework.decorators import permission_classes
-from .permissions import IsAdmin, IsAnonymous, user_required, anonymous_required
+from . import permissions
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.shortcuts import get_object_or_404
 
@@ -39,7 +39,7 @@ class UserPaginations(PageNumberPagination):
     description="Register or add a new user. phone with 11 characters"
 )
 @api_view(['POST'])
-@anonymous_required
+@permissions.anonymous_required
 def RegisterUser(request: Request):
     user = request.data
     serializer = serializers.RegisterUserSerializer(data=user)
@@ -73,13 +73,13 @@ class User_GET_All(viewsets.ModelViewSet):
     # pagination_class = UserPaginations
     queryset = models.CustomUser.objects.all()
     permission_classes = [
-        IsAdmin
+        permissions.IsAdmin
     ]
 
 
 # custom login view
 class CustomLoginView(TokenObtainPairView):
-    permission_classes = [IsAnonymous]
+    permission_classes = [permissions.IsAnonymous]
 
 
 # get one user
@@ -88,8 +88,17 @@ class CustomLoginView(TokenObtainPairView):
     responses={302: serializers.UserSerializer}
 )
 @api_view(['GET'])
-@permission_classes([IsAdmin])
+@permission_classes([permissions.IsAdmin])
 def GetUser(request: Request, user_id: int):
     user = get_object_or_404(models.CustomUser, id=user_id)
     serializer = serializers.UserSerializer(user)
     return Response(data=serializer.data, status=status.HTTP_302_FOUND)
+
+
+# get all exercises
+class GetAllExercisesViewset(viewsets.ModelViewSet):
+    queryset = models.Exercise.objects.all()
+    serializer_class = serializers.ExerciseSerializer
+    permission_classes = [
+        permissions.IsAdminOrReadOnly
+    ]

@@ -20,3 +20,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+# serializers of exercise
+class ExerciseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Exercise
+        fields = '__all__' 

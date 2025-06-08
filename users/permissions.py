@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.request import Request
 from functools import wraps
 
@@ -43,3 +43,11 @@ def user_required(view_func):
 
         return view_func(request, *args, **kwargs)
     return _wrapped_view
+
+
+# only admins can edit ,delete ,add something
+class IsAdminOrReadOnly(BasePermission):
+    def has_permission(self, request: Request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        return getattr(request.user, 'role', None) == 'ADMIN'

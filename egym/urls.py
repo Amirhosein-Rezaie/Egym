@@ -4,7 +4,11 @@ from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
 )
-from users import views
+from users import views as UsersViews
+from rest_framework.routers import DefaultRouter
+
+ExerciseRouter = DefaultRouter()
+ExerciseRouter.register('', UsersViews.GetAllExercisesViewset)
 
 
 urlpatterns = [
@@ -13,10 +17,12 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('products/', include('products.urls')),
     path('blogs/', include('blogs.urls')),
-    path('login/', views.CustomLoginView.as_view()),
-    path('register/', views.RegisterUser),
-    path('user/<int:user_id>', views.GetUser),
+    path('login/', UsersViews.CustomLoginView.as_view()),
+    path('register/', UsersViews.RegisterUser),
+    path('user/<int:user_id>', UsersViews.GetUser),
     # swagger and documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(), name='swagger_ui')
+    path('api/docs/', SpectacularSwaggerView.as_view(), name='swagger_ui'),
+    # exercises url
+    path('exercises/', include(ExerciseRouter.urls))
 ]
