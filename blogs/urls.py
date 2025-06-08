@@ -6,5 +6,6 @@ router = DefaultRouter()
 router.register('', views.BlogAll, basename='allBlogs')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('search/<str:search>', views.search_blogs)
 ]
