@@ -18,8 +18,6 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('blogs/', include('blogs.urls')),
     path('login/', UsersViews.CustomLoginView.as_view()),
-    path('register/', UsersViews.RegisterUser),
-    path('user/<int:user_id>', UsersViews.GetUser),
     # swagger and documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(), name='swagger_ui'),

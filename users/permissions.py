@@ -8,13 +8,13 @@ from functools import wraps
 # a permission class for only admins
 class IsAdmin(BasePermission):
     def has_permission(self, request: Request, view):
-        return request.user.is_authenticated and request.user.role == 'ADMIN'
+        return request.user.is_authenticated and request.user.is_staff == True
 
 
 # a permission class for only users
 class IsUser(BasePermission):
     def has_permission(self, request: Request, view):
-        return request.user.is_authenticated and request.user.role == 'USER'
+        return request.user.is_authenticated and request.user.is_staff == False
 
 
 # a permission class for only anonymous user
@@ -50,4 +50,17 @@ class IsAdminOrReadOnly(BasePermission):
     def has_permission(self, request: Request, view):
         if request.method in SAFE_METHODS:
             return True
-        return getattr(request.user, 'role', None) == 'ADMIN'
+        return getattr(request.user, 'is_staff', None) == True
+
+
+class PostForAnonymousGetPutDeleteForAdmin(BasePermission):
+    def has_permission(self, request: Request, view):
+        user = request.user
+
+        if request.method == 'POST':
+            return not user.is_authenticated
+
+        elif request.method in ['GET', 'DELETE', 'PUT']:
+            return user.is_authenticated and user.is_staff
+
+        return False
