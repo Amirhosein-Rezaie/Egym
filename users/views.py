@@ -70,7 +70,7 @@ def AllUsers(request):
 # viewset of all the users
 class User_GET_All(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
-    pagination_class = UserPaginations
+    # pagination_class = UserPaginations
     queryset = models.CustomUser.objects.all()
     permission_classes = [
         IsAdmin

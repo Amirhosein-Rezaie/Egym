@@ -21,7 +21,7 @@ class ProductPagination(PageNumberPagination):
 class ProductAll(viewsets.ModelViewSet):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductSerializer
-    pagination_class = ProductPagination
+    # pagination_class = ProductPagination
     permission_classes = [
         permissions.IsAdminOrReadOnly
     ]

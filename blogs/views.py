@@ -20,7 +20,7 @@ class BlogPagination(PageNumberPagination):
 class BlogAll(viewsets.ModelViewSet):
     queryset = models.Blog.objects.all()
     serializer_class = serializeres.BlogSerializer
-    pagination_class = BlogPagination
+    # pagination_class = BlogPagination
     permission_classes = [
         IsAdmin
     ]
