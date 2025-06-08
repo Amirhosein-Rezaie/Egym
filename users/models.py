@@ -45,7 +45,7 @@ class Exercise(models.Model):
     ], default=8)
 
     class Meta:
-        db_table = 'Exercises'
+        db_table = 'Exercise'
 
     def __str__(self):
         return f"{self.exercise} on {self.day}"
