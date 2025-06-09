@@ -30,17 +30,22 @@ class ProductAll(viewsets.ModelViewSet):
 
 # search in products
 @extend_schema(
+    description="search in the name of products",
     responses={200: serializers.ProductSerializer}
 )
 @api_view(['GET'])
 def search_products(request: Request, search: str):
+    # without pagination
     products_found = models.Product.objects.filter(name__icontains=search)
+    serializer = serializers.ProductSerializer(products_found,many=True)
+    return Response(data=serializer.data,status=status.HTTP_200_OK)
 
-    paginator = PageNumberPagination()
-    paginator.page_size = 2
-    paginated_products = paginator.paginate_queryset(products_found, request)
+    # # with pagination
+    # paginator = PageNumberPagination()
+    # paginator.page_size = 2
+    # paginated_products = paginator.paginate_queryset(products_found, request)
 
-    serialized_products = serializers.ProductSerializer(
-        paginated_products, many=True)
+    # serialized_products = serializers.ProductSerializer(
+    #     paginated_products, many=True)
 
-    return paginator.get_paginated_response(data=serialized_products.data)
+    # return paginator.get_paginated_response(data=serialized_products.data)

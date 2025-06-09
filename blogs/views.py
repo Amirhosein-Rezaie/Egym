@@ -29,6 +29,7 @@ class BlogAll(viewsets.ModelViewSet):
 
 # search in the blogs
 @extend_schema(
+    description="search in the title of blogs",
     responses={200: serializeres.BlogSerializer}
 )
 @api_view(['GET'])
