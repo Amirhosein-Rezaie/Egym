@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from . import models
 from . import serializers
 from rest_framework.pagination import PageNumberPagination
-from . import permissions
+from . import permissions 
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -23,7 +23,7 @@ class User_GET_All(viewsets.ModelViewSet):
 
 # custom login view
 class CustomLoginView(TokenObtainPairView):
-    permission_classes = [permissions.IsAnonymous]
+    permission_classes = []
 
 
 # get all exercises
