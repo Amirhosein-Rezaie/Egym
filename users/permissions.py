@@ -36,6 +36,10 @@ class PostForAnonymousGetPutDeleteForAdmin(BasePermission):
             return not user.is_authenticated
 
         elif request.method in ['GET', 'DELETE', 'PUT']:
-            return user.is_authenticated and user.is_staff
+            user_id_from_url = view.kwargs.get('id') or view.kwargs.get('pk')
 
+            if user.is_authenticated and user_id_from_url:
+                return int(user_id_from_url) == int(user.id)
+
+            return user.is_authenticated and user.is_staff
         return False
