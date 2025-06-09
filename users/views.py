@@ -33,3 +33,4 @@ class GetAllExercisesViewset(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAdminOrReadOnly
     ]
+    

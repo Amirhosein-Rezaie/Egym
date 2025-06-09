@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-lv4+s5%wn7grhho8b3rf*n#6=@0*(1v$hhm4hdwc1f!k-5$8c#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'blogs',
     'drf_spectacular',
     'home',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'egym.urls'
@@ -145,3 +147,5 @@ REST_FRAMEWORK = {
 #     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 #     'AUTH_HEADER_TYPES': ('Bearer',),
 # }
+
+CORS_ALLOW_ALL_ORIGINS = True
