@@ -43,3 +43,9 @@ class PostForAnonymousGetPutDeleteForAdmin(BasePermission):
 
             return user.is_authenticated and user.is_staff
         return False
+
+
+# post user for only quests
+class QuestsOnly(BasePermission):
+    def has_permission(self, request, view):
+        return not request.user or not request.user.is_authenticated
