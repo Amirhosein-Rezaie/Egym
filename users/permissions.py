@@ -1,4 +1,5 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+from django.contrib.auth.models import AnonymousUser
 
 
 # a permission class for only users
@@ -11,7 +12,7 @@ class IsUser(BasePermission):
 class IsAnonymous(BasePermission):
     def has_permission(self, request, view):
         return bool(
-            request.user.id == None
+            request.user == AnonymousUser
         )
 
 

@@ -5,7 +5,7 @@ from . import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = '__all__'
+        exclude = ['password']
 
 
 # the serializer of the register new user
