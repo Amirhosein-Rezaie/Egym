@@ -4,7 +4,7 @@ from . import serializers
 from rest_framework.pagination import PageNumberPagination
 from . import permissions
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny, IsAdminUser
 
 
 # set settings for paginations of users
@@ -17,21 +17,15 @@ class User_GET_All(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     # pagination_class = UserPaginations
     queryset = models.CustomUser.objects.all()
-    # permission_classes = [
-    #     permissions.PostForAnonymousGetPutDeleteForAdmin
-    # ]
 
     def get_permissions(self):
         if self.action == 'create':
-            return [AllowAny()]
-        elif self.action in ['list', 'retrieve', 'destroy', 'partial_update']:
-            return [IsAuthenticated()]
+            return [permissions.IsAnonymous()]
+        if self.action in ['list', 'partial_update']:
+            return [IsAdminUser()]
+        if self.action in ['retrieve', 'destroy']:
+            return [permissions.OwerUser()]
         return super().get_permissions()
-
-
-# custom login view
-class CustomLoginView(TokenObtainPairView):
-    permission_classes = []
 
 
 # get all exercises
