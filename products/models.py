@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.core.validators import (
     MinValueValidator
 )
@@ -20,6 +19,8 @@ class Product(models.Model):
     stock = models.IntegerField(null=True, blank=False, validators=[
         MinValueValidator(0),
     ])
+
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
     class Meta:
         db_table = 'Product'
