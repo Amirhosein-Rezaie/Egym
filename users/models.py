@@ -13,6 +13,8 @@ class CustomUser(AbstractUser):
 
     phone = models.CharField(max_length=11, unique=True, blank=True, null=True)
 
+    profile = models.ImageField(blank=True, null=True, upload_to="profiles/")
+
     class Meta:
         db_table = 'User'
 

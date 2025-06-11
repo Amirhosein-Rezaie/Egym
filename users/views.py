@@ -24,7 +24,7 @@ class User_GET_All(viewsets.ModelViewSet):
         if self.action in ['list', 'partial_update']:
             return [IsAdminUser()]
         if self.action in ['retrieve', 'destroy']:
-            return [permissions.OwerUser()]
+            return [permissions.OwerUserORadmin()]
         return super().get_permissions()
 
 
