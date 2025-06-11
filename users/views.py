@@ -13,7 +13,7 @@ class UserPaginations(PageNumberPagination):
 
 
 # viewset of all the users
-class User_GET_All(viewsets.ModelViewSet):
+class Users(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     # pagination_class = UserPaginations
     queryset = models.CustomUser.objects.all()
