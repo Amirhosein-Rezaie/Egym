@@ -35,3 +35,8 @@ class GetAllExercisesViewset(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAdminOrReadOnly
     ]
+
+
+# custome login
+class TokenCustomLogin(TokenObtainPairView):
+    permission_classes = [permissions.IsAnonymous]

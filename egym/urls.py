@@ -1,3 +1,5 @@
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import (
@@ -6,12 +8,11 @@ from drf_spectacular.views import (
 )
 from users import views as UsersViews
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 ExerciseRouter = DefaultRouter()
 ExerciseRouter.register('', UsersViews.GetAllExercisesViewset)
 
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -25,5 +26,7 @@ urlpatterns = [
     # exercises url
     path('exercises/', include(ExerciseRouter.urls)),
     # login django users
-    path('login', include('rest_framework.urls'))
+    path('login', include('rest_framework.urls')),
+    # token login
+    path('token-login/', UsersViews.TokenCustomLogin.as_view()),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
