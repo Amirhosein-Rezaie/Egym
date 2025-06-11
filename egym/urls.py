@@ -29,4 +29,6 @@ urlpatterns = [
     path('login', include('rest_framework.urls')),
     # token login
     path('token-login/', UsersViews.TokenCustomLogin.as_view()),
+    # gallery
+    path('gallery/', include('gallery.urls'))
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
