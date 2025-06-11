@@ -10,6 +10,8 @@ from rest_framework.routers import DefaultRouter
 ExerciseRouter = DefaultRouter()
 ExerciseRouter.register('', UsersViews.GetAllExercisesViewset)
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -24,4 +26,4 @@ urlpatterns = [
     path('exercises/', include(ExerciseRouter.urls)),
     # login django users
     path('login', include('rest_framework.urls'))
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
