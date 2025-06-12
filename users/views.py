@@ -44,7 +44,7 @@ class TokenCustomLogin(TokenObtainPairView):
 
 # orders and order_detials
 class orders(viewsets.ModelViewSet):
-    serializer_class = serializers.OrderSerilizer
+    serializer_class = serializers.OrderSeriliazer
     queryset = models.Order.objects.all()
 
     def get_serializer_class(self):
