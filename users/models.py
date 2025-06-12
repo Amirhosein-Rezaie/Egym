@@ -80,6 +80,9 @@ class Order(models.Model):
     track_code = models.CharField(
         max_length=255, unique=True, editable=False, default=tarck_code_order)
 
+    def __str__(self):
+        return f"{self.user} -> {self.track_code}"
+
 
 class order_detail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -91,3 +94,7 @@ class order_detail(models.Model):
     ])
 
     date = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f"{self.product} -> {self.order}"
