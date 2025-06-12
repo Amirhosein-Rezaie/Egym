@@ -30,15 +30,21 @@ class ExerciseSerializer(serializers.ModelSerializer):
 
 
 # serializer for orders and order_detials
-class UserOrderSerilizer(serializers.ModelSerializer):
+class UserOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
         fields = ['username', 'first_name', 'last_name']
 
 
-class OrderSerilizer(serializers.ModelSerializer):
-    user = UserOrderSerilizer(read_only=True)
+class OrderSeriliazer(serializers.ModelSerializer):
+    user = UserOrderSerializer(read_only=True)
 
+    class Meta:
+        model = models.Order
+        fields = '__all__'
+
+# add or create order serializer
+class AddOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Order
         fields = '__all__'

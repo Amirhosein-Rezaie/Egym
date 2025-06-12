@@ -46,3 +46,8 @@ class TokenCustomLogin(TokenObtainPairView):
 class orders(viewsets.ModelViewSet):
     serializer_class = serializers.OrderSerilizer
     queryset = models.Order.objects.all()
+
+    def get_serializer_class(self):
+        if (self.request.method == 'POST'):
+            return serializers.AddOrderSerializer
+        return super().get_serializer_class()
