@@ -40,3 +40,9 @@ class GetAllExercisesViewset(viewsets.ModelViewSet):
 # custome login
 class TokenCustomLogin(TokenObtainPairView):
     permission_classes = [permissions.IsAnonymous]
+
+
+# orders and order_detials
+class orders(viewsets.ModelViewSet):
+    serializer_class = serializers.OrderSerilizer
+    queryset = models.Order.objects.all()

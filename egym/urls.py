@@ -13,6 +13,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 ExerciseRouter = DefaultRouter()
 ExerciseRouter.register('', UsersViews.GetAllExercisesViewset)
 
+orderRouter = DefaultRouter()
+orderRouter.register('', UsersViews.orders)
 
 urlpatterns = [
     path('', include('home.urls')),
@@ -30,5 +32,7 @@ urlpatterns = [
     # token login
     path('token-login/', UsersViews.TokenCustomLogin.as_view()),
     # gallery
-    path('gallery/', include('gallery.urls'))
+    path('gallery/', include('gallery.urls')),
+    # orders
+    path('orders/', include(orderRouter.urls)),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
